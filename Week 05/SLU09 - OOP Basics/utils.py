@@ -66,8 +66,8 @@ class Basket:
     def examine_basket(self):
         self.check_total_price()
         for item in self.content:
-            print('- {0} {1} (total price {2})'.format(
-                item.nr_units, item.name, item.calculate_price()))
+            print('- {0} {1} (total price {2}) (days to expire {3})'.format(
+                item.nr_units, item.name, item.calculate_price(), item.days_until_expired))
 
 
 class Toiletpaper:
@@ -79,7 +79,7 @@ class Toiletpaper:
         self.days_until_expired = days_until_expired
 
     def calculate_price(self):
-        return self.price_per_unit
+        return self.nr_units * self.price_per_unit
 
 
 class Capturing(list):
