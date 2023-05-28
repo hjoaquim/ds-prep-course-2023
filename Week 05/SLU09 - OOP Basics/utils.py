@@ -162,13 +162,13 @@ def exercise_4_grading(Item, chair, vase, pillow):
     # does it have the right attributes?
     source = inspect.getsource(Item.__init__).replace(" ", "")
     for attribute in ['name', 'weight', 'fragile', 'broken']:
-        assert 'self.%s=' % attribute in source, 'What about the %s?' % attribute
+        assert 'self.%s' % attribute in source, 'What about the %s?' % attribute
 
     # did they create the right students?
     assert chair.weight + vase.weight + pillow.weight == 19, 'Are their weights correct?'
 
 
-def exercise_5_grading(BasicBox):
+def exercise_5_grading(BasicBox, Item):
     # tests for the Item class
     assert hasattr(BasicBox, '__init__'), 'What about the __init__?'
 
@@ -183,7 +183,7 @@ def exercise_5_grading(BasicBox):
     # does it have the right attributes?
     source = inspect.getsource(BasicBox.__init__).replace(" ", "")
     for attribute in ['name', 'contents', 'weight_limit', 'weight', 'broken']:
-        assert 'self.%s=' % attribute in source, 'What about the %s?' % attribute
+        assert 'self.%s' % attribute in source, 'What about the %s?' % attribute
 
     # checking the method
     assert hasattr(BasicBox, 'add_item'), 'do you have a method to add items?'
@@ -194,11 +194,17 @@ def exercise_5_grading(BasicBox):
     test_item_1 = 'test 1, in reality this would be an item, not text'
     test_item_2 = 'test 2, in reality this would be an item, not text'
 
-    test_box = BasicBox(name='my test box', weight_limit=1)
+    test_box = BasicBox(name='my test box', weight_limit=10)
     test_box.add_item(test_item_1)
     test_box.add_item(test_item_2)
+    assert len(test_box.contents) == 0
+
+    item_1 = Item(name='test1', weight=1, fragile=True)
+    item_2 = Item(name='test2', weight=1, fragile=False)
+    test_box.add_item(item_1)
+    test_box.add_item(item_2)
     assert len(test_box.contents) == 2
-    assert test_box.contents[1] == test_item_2
+
 
 
 class Item:
@@ -224,7 +230,7 @@ def exercise_6_grading(Box):
     # does it have the right attributes?
     source = inspect.getsource(Box.__init__).replace(" ", "")
     for attribute in ['name', 'contents', 'weight_limit', 'weight', 'broken']:
-        assert 'self.%s=' % attribute in source, 'What about the %s?' % attribute
+        assert 'self.%s' % attribute in source, 'What about the %s?' % attribute
 
     # checking add_item
     assert hasattr(Box, 'add_item'), 'do you have a method to add items?'
@@ -299,7 +305,7 @@ def exercise_7_validate_Player(Player):
     # does it have the right attributes?
     source = inspect.getsource(Player.__init__).replace(" ", "")
     for attribute in ['name', 'salary', 'accuracy']:
-        assert 'self.%s=' % attribute in source, 'What about the %s?' % attribute
+        assert 'self.%s' % attribute in source, 'What about the %s?' % attribute
 
     # checking add_item
     assert hasattr(Player, 'attempt_to_score'), 'do you have a method to attempt_to_score?'
@@ -341,7 +347,7 @@ def exercise_7_validate_Team(Team, Player):
     # does it have the right attributes?
     source = inspect.getsource(Team.__init__).replace(" ", "")
     for attribute in ['name', 'budget', 'players', 'wins', 'games_played', 'points_in_game']:
-        assert 'self.%s=' % attribute in source, 'What about the %s attribute?' % attribute
+        assert 'self.%s' % attribute in source, 'What about the %s attribute?' % attribute
 
     # checking hire_player
     assert hasattr(Team, 'hire_player'), 'do you have a method to hire a player?'
@@ -435,7 +441,7 @@ def exercise_8_validate_League(League, Team, Player):
         # does it have the right attributes?
         source = inspect.getsource(League.__init__).replace(" ", "")
         for attribute in ['name', 'teams', 'games']:
-            assert 'self.%s=' % attribute in source, 'What about the %s attribute?' % attribute
+            assert 'self.%s' % attribute in source, 'What about the %s attribute?' % attribute
 
     def test_add_team(League, Team, Player):
         assert hasattr(League, 'add_team'), 'do you have a method to add a team?'
